@@ -1,0 +1,1 @@
+/usr/bin/c++    -g -march=native -std=c++11   CMakeFiles/TNN-B.dir/main.cpp.o CMakeFiles/TNN-B.dir/layer.cpp.o CMakeFiles/TNN-B.dir/mlp2.cpp.o  -o TNN-B -rdynamic 

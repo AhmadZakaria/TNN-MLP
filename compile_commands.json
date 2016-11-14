@@ -1,0 +1,17 @@
+[
+{
+  "directory": "/home/ahmad/Documents/Masters/TNN/Programming Assignments/TNN-B",
+  "command": "/usr/bin/g++     -march=native -std=c++11 -g3 -gdwarf-2   -o CMakeFiles/TNN-B.dir/main.cpp.o -c \"/home/ahmad/Documents/Masters/TNN/Programming Assignments/TNN-B/main.cpp\"",
+  "file": "/home/ahmad/Documents/Masters/TNN/Programming Assignments/TNN-B/main.cpp"
+},
+{
+  "directory": "/home/ahmad/Documents/Masters/TNN/Programming Assignments/TNN-B",
+  "command": "/usr/bin/g++     -march=native -std=c++11 -g3 -gdwarf-2   -o CMakeFiles/TNN-B.dir/layer.cpp.o -c \"/home/ahmad/Documents/Masters/TNN/Programming Assignments/TNN-B/layer.cpp\"",
+  "file": "/home/ahmad/Documents/Masters/TNN/Programming Assignments/TNN-B/layer.cpp"
+},
+{
+  "directory": "/home/ahmad/Documents/Masters/TNN/Programming Assignments/TNN-B",
+  "command": "/usr/bin/g++     -march=native -std=c++11 -g3 -gdwarf-2   -o CMakeFiles/TNN-B.dir/mlp2.cpp.o -c \"/home/ahmad/Documents/Masters/TNN/Programming Assignments/TNN-B/mlp2.cpp\"",
+  "file": "/home/ahmad/Documents/Masters/TNN/Programming Assignments/TNN-B/mlp2.cpp"
+}
+]

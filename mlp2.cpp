@@ -123,11 +123,11 @@ class MLP2 {
     }
 
     double evaluate(MatrixXd* test_input, MatrixXd* test_output, int iters = 15000) {
-      std::fstream output_file("error.dat", std::ios_base::out);
-      if(!output_file.is_open()) {
-          std::cerr << "Not open!! "<< std::endl;
-          return NULL;
-      }
+        std::fstream output_file("error.dat", std::ios_base::out);
+        if(!output_file.is_open()) {
+            std::cerr << "Not open!! "<< std::endl;
+            return 0.0;
+        }
         for (int iter = 0; iter < iters; ++iter) { // repeat training
 
             for (int row_idx = 0; row_idx < inputs->rows(); ++row_idx) { //train

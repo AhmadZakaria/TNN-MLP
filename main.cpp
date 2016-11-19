@@ -69,15 +69,21 @@ int main() {
 
     std::vector<int> *layer_configurations = new std::vector<int>();
     layer_configurations->push_back(training_data->cols());
-    layer_configurations->push_back(4);
-    layer_configurations->push_back(5);
+    layer_configurations->push_back(15);
+    layer_configurations->push_back(20);
+    layer_configurations->push_back(16);
+    layer_configurations->push_back(30);
+    layer_configurations->push_back(10);
     layer_configurations->push_back(teacher_output->cols());
 
     std::vector<double> *learning_rates = new std::vector<double>();
-    learning_rates->push_back(0.01);
-    learning_rates->push_back(0.01);
-    learning_rates->push_back(0.01);
-    learning_rates->push_back(0.01);
+    learning_rates->push_back(0.001);
+    learning_rates->push_back(0.001);
+    learning_rates->push_back(0.003);
+    learning_rates->push_back(0.001);
+    learning_rates->push_back(0.002);
+    learning_rates->push_back(0.001);
+    learning_rates->push_back(0.001);
 
     MLP2 *net = new MLP2(training_data,teacher_output, layer_configurations, learning_rates);
     net->evaluate(testing_data,test_output);

@@ -84,6 +84,7 @@ class MLP2 {
         MatrixXd bias;
         bias.setOnes(input->rows(), 1);
         input->col(input->cols()-1) = bias;
+//        delete all_layers.at(0)->getZ();
         all_layers.at(0)->setZ(input);
 
         // forward propagate hidden layers
@@ -108,17 +109,21 @@ class MLP2 {
 
             MatrixXd * next_D = all_layers.at(lay_idx+1)->getD();
             MatrixXd *temp = new MatrixXd((W_nobias * (*next_D)).cwiseProduct(*(curr_layer->getF())));
+            delete curr_layer->getD();
+//            delete next_D;
             curr_layer->setD(temp);
         }
     }
 
     void update_weights() {
+#pragma omp parallel for
         for (int idx = 0; idx < all_layers.size()-1; ++idx) {
             MatrixXd * next_D = all_layers.at(idx+1)->getD();
             MatrixXd * curr_Z = all_layers.at(idx)->getZ();
             MatrixXd * curr_W = all_layers.at(idx)->getW();
             MatrixXd * W_gradient = new MatrixXd(-eta_per_layer->at(idx) * ((*next_D)*(*curr_Z)).transpose());
             *curr_W += *W_gradient;
+            delete W_gradient;
         }
     }
 
@@ -141,7 +146,7 @@ class MLP2 {
             double err = ((*teacher_output) - (*out)).squaredNorm();
             std::cout << "[train] Sum of squared errors: "<< err <<std::endl;
             output_file <<iter<< "\t"<< err << "\t";
-            delete out;
+//            delete out;
             //calculate training error
             out = forward_propagate(*test_input);
             err = ((*test_output) - (*out)).squaredNorm();

@@ -8,11 +8,11 @@
 namespace helper {
 
 
-Eigen::MatrixXd* readInputs(std::string filename, Eigen::MatrixXd* &outputs) {
+Eigen::MatrixXd readInputs(std::string filename, Eigen::MatrixXd &outputs) {
     std::fstream input_file(filename.c_str(), std::ios_base::in);
     if(!input_file.is_open()) {
         std::cerr << "Not open!! "<< std::endl;
-        return NULL;
+        return Eigen::MatrixXd();
     }
     std::string s;
     int P, N, M;
@@ -28,21 +28,22 @@ Eigen::MatrixXd* readInputs(std::string filename, Eigen::MatrixXd* &outputs) {
     input_file >> s; // read M
     M = std::stoi(s.substr(2), nullptr); // skip 'M=' and parse M
 
-    Eigen::MatrixXd *inputs = new Eigen::MatrixXd(P, N);
-    delete outputs;
-    outputs = new Eigen::MatrixXd(P, M);
+    Eigen::MatrixXd inputs;
+    inputs.resize(P, N);
+//    delete outputs;
+    outputs.resize(P, M);
 
     double a;
     for (int ex = 0; ex < P; ++ex) {
         for (int in = 0; in < N; ++in) {
             input_file >> a;
             //            std::cout<< " (" << P<<","<<N << ")" <<std::endl;
-            (*inputs)(ex,in) = a;
+            (inputs)(ex,in) = a;
         }
         for (int teach = 0; teach < M; ++teach) {
             input_file >> a;
 //            std::cout<< " (" << P<<","<<teach << ") == " << a<<std::endl;
-            (*outputs)(ex, teach) = a;
+            (outputs)(ex, teach) = a;
         }
     }
 
@@ -62,28 +63,28 @@ int main() {
     //  set activations for every layer
     //  create the network
     //  forward propagate
-    Eigen::MatrixXd* teacher_output = new Eigen::MatrixXd();
-    Eigen::MatrixXd* training_data = helper::readInputs("../training2_tr.dat", teacher_output);
-    Eigen::MatrixXd* test_output = new Eigen::MatrixXd();
-    Eigen::MatrixXd* testing_data = helper::readInputs("../training2_ts.dat", test_output);
+    Eigen::MatrixXd teacher_output;
+    Eigen::MatrixXd training_data = helper::readInputs("../training2_tr.dat", teacher_output);
+    Eigen::MatrixXd test_output;
+    Eigen::MatrixXd testing_data = helper::readInputs("../training2_ts.dat", test_output);
 
     std::vector<int> *layer_configurations = new std::vector<int>();
-    layer_configurations->push_back(training_data->cols());
+    layer_configurations->push_back(training_data.cols());
     layer_configurations->push_back(15);
     layer_configurations->push_back(20);
-    layer_configurations->push_back(16);
+    layer_configurations->push_back(86);
     layer_configurations->push_back(30);
-    layer_configurations->push_back(10);
-    layer_configurations->push_back(teacher_output->cols());
+    layer_configurations->push_back(40);
+    layer_configurations->push_back(teacher_output.cols());
 
     std::vector<double> *learning_rates = new std::vector<double>();
     learning_rates->push_back(0.001);
     learning_rates->push_back(0.001);
     learning_rates->push_back(0.003);
     learning_rates->push_back(0.001);
-    learning_rates->push_back(0.002);
+    learning_rates->push_back(0.032);
     learning_rates->push_back(0.001);
-    learning_rates->push_back(0.001);
+    learning_rates->push_back(0.01);
 
     MLP2 *net = new MLP2(training_data,teacher_output, layer_configurations, learning_rates);
     net->evaluate(testing_data,test_output);
